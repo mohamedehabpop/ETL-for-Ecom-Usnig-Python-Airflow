@@ -1,5 +1,11 @@
 import pandas as pd 
 import requests
+import boto3
+
+# Set up an S3 client
+s3 = boto3.client('s3')
+
+
 def run_sghut_ETL():
     API_url = 'https://www.sunglasshut.com/wcs/resources/plp/10152/byCategoryId/3074457345626651837'
     results = []
@@ -118,3 +124,13 @@ def run_sghut_ETL():
 
     # Loading Data
     df.to_csv('sghut.csv', index = False, header = True)
+
+    
+    
+# Set the name of the S3 bucket and the local file path
+bucket_name = 'your-bucket-name'
+file_path = 'path/to/local/sghut.csv'
+
+    
+ # Upload the file to S3
+s3.upload_file(file_path, bucket_name, 'remote/file/name')
